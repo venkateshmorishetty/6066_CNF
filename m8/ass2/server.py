@@ -37,7 +37,6 @@ def main():
 			if l[-1] == "Dollar":
 				s.sendto(str(int(l[2])/113.41).encode(), addr)
 			if l[-1] == "Pounds":
-				client.send()
 				s.sendto(str((int(l[2])/113.41)*0.75).encode(), addr)
 			if l[-1] == "INR":
 				s.sendto(str((int(l[2])/113.41)*67).encode(), addr)
