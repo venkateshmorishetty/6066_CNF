@@ -25,6 +25,7 @@ def main():
 
 	client.close()
 def info(client):
+	limit = 0
 	message = client.recv(1024).decode()
 	li = message.split(' ')
 	rollnumber = li[1]
@@ -47,6 +48,7 @@ def info(client):
 				text = 'ROLLNUMBER-NOTFOUND'
 				client.send(text.encode())
 		if li[0] == 'SECRETANSWER':
+			limt = limt+1
 			f = True
 			for i in rows:
 				temp = i
@@ -57,6 +59,10 @@ def info(client):
 						f = False
 						break
 					else :
+						if limit == 5:
+							warn = "limit exceeded"
+							client.send(warn.encode())
+							f = False
 						text = 'ATTENDANCE FAILUE'+"\n"+str(temp[1])
 						client.send(text.encode())
 						break
