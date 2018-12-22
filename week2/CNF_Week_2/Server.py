@@ -2,6 +2,7 @@ import socket
 import threading
 import csv
 rows = []
+present = []
 def main():
 	host = '10.10.9.107'
 	port = 4000
@@ -14,22 +15,22 @@ def main():
 	#reading csv file and store it in rows
 	with open(file,'r') as csvfile:
 		csvreader = csv.reader(csvfile)
-		# fields = csvreader.next()
 		for row in csvreader:
 			rows.append(row)
 
 	s.listen(10)
 	while True:
 		client,addr = s.accept()
-		print("connection from: "+str(client))
 		threading.Thread(target = info, args=(client, )).start()
 
 	client.close()
 def info(client):
 	message = client.recv(1024).decode()
-	print(rows)
 	li = message.split(' ')
 	rollnumber = li[1]
+	present.append(li[1])
+	print("present rollnumbers connected to server are:")
+	print(present)
 	while True:
 		if li[0] == 'MARK-ATTENDANCE':
 			flag = False
@@ -47,7 +48,6 @@ def info(client):
 				client.send(text.encode())
 		if li[0] == 'SECRETANSWER':
 			f = True
-			print("in "+str(rollnumber))
 			for i in rows:
 				temp = i
 				if temp[0] == rollnumber:
@@ -65,7 +65,6 @@ def info(client):
 
 		message = client.recv(1024).decode()
 		li = message.split(' ')
-		print(li)
 
 
 	
