@@ -43,7 +43,7 @@ def example(client):
 			if str(i) != str(client):
 				i.send(m.encode())
 		l.remove(client)
-		print("count "+str(threading.activeCount()))
+		# print("count "+str(threading.activeCount()))
 		if threading.activeCount() == int(3):
 			m = "you are the only one in the group"
 			l[0].send(m.encode())
